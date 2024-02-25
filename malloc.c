@@ -88,8 +88,8 @@ static int brk(void *end_data_segment) {
       "int $0x80 \n\t"
       "movl %%eax, %0 \n\t"
       : "=r"(ret)
-      : "m"(end_data_segment));
-  return ret;
+      : "m"(end_data_segment)
+      : "ebx");
 }
 #endif
 
@@ -110,7 +110,7 @@ int mini_crt_heap_init() {
   }
 #else
   base = (void *)brk(0);
-  void *end = ADDR_ADD(base, HEADER_SIZE);
+  void *end = ADDR_ADD(base, heap_size);
   end = (void *)brk(end);
   if (!end) {
     return 0;

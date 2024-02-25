@@ -1,5 +1,21 @@
-#define NULL 0
+#ifndef __MINI_CRT_H__
+#define __MINI_CRT_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// malloc
+#ifndef NULL
+#define NULL 0
+#endif
+
+void free(void *ptr);
+void *malloc(unsigned size);
+static int brk(void *end_data_segment);
+int mini_crt_heap_init();
+
+// 文件与IO
 typedef int FILE;
 #define EOF (-1)
 
@@ -16,8 +32,26 @@ typedef int FILE;
 int mini_crt_heap_init();
 int mini_crt_io_init();
 
+FILE *fopen(const char *filename, const char *mode);
+int fread(void *buffer, int size, int count, FILE *stream);
+int fwrite(const void *buffer, int size, int count, FILE *stream);
+int fclose(FILE *fp);
+int fseek(FILE *fp, int offset, int set);
+
+// printf
+int fputc(int c, FILE *stream);
+int fputs(const char *str, FILE *stream);
+int printf(const char *format, ...);
+int fprintf(FILE *stream, const char *format, ...);
+
 // string.c
 char *itoa(int n, char *str, int radix);
 int strcmp(const char *src, const char *dst);
 char *strcpy(char *dest, const char *src);
 unsigned strlen(const char *str);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif  // __MINI_CRT_H__

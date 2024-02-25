@@ -67,6 +67,6 @@ void exit(int exitCode) {
   asm("movl %0, %%ebx \n\t"
       "movl $1, %%eax \n\t"
       "int $0x80 \n\t"
-      "hlt \n\t" ::"m"(exitCode));
+      "hlt \n\t" ::"m"(exitCode):"ebx");
 #endif
 }

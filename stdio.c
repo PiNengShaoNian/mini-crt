@@ -71,7 +71,8 @@ static int open(const char *pathname, int flags, int mode) {
       "int $0x80 \n\t"
       "movl %%eax, %0 \n\t"
       : "=m"(fd)
-      : "m"(pathname), "m"(flags), "m"(mode));
+      : "m"(pathname), "m"(flags), "m"(mode)
+      : "ebx", "ecx", "edx");
 }
 
 static int read(int fd, void *buffer, unsigned size) {
@@ -83,7 +84,8 @@ static int read(int fd, void *buffer, unsigned size) {
       "int $0x80 \n\t"
       "movl %%eax, %0 \n\t"
       : "=m"(ret)
-      : "m"(fd), "m"(buffer), "m"(size));
+      : "m"(fd), "m"(buffer), "m"(size)
+      : "ebx", "ecx", "edx");
   return ret;
 }
 
@@ -96,7 +98,8 @@ static int write(int fd, const void *buffer, unsigned size) {
       "int $0x80 \n\t"
       "movl %%eax, %0 \n\t"
       : "=m"(ret)
-      : "m"(fd), "m"(buffer), "m"(size));
+      : "m"(fd), "m"(buffer), "m"(size)
+      : "ebx", "ecx", "edx");
   return ret;
 }
 
@@ -107,7 +110,8 @@ static int close(int fd) {
       "int $0x80 \n\t"
       "movl %%eax, %0 \n\t"
       : "=m"(ret)
-      : "m"(fd));
+      : "m"(fd)
+      : "ebx");
   return ret;
 }
 
@@ -120,7 +124,8 @@ static int seek(int fd, int offset, int mode) {
       "int $0x80 \n\t"
       "movl %%eax, %0 \n\t"
       : "=m"(ret)
-      : "m"(fd), "m"(offset), "m"(mode));
+      : "m"(fd), "m"(offset), "m"(mode)
+      : "ebx", "ecx", "edx");
   return ret;
 }
 
